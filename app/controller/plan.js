@@ -1,5 +1,5 @@
-const Controller = require('egg').Controller
-const { Pool, Client } = require('pg')
+const Controller = require("egg").Controller;
+const { Pool, Client } = require("pg");
 const fs = require("fs");
 
 //this initializes a connection pool
@@ -8,29 +8,30 @@ const fs = require("fs");
 
 class PlanController extends Controller {
   async index() {
-    this.data = ""
+    this.data = "";
     const client = new Client({
-      user: 'freeswitch',
-      host: '127.0.0.1',
-      database: 'ipbc',
-      password: 'y2u4evam',
+      user: "freeswitch",
+      host: "127.0.0.1",
+      database: "ipbc",
+      password: "y2u4evam",
       port: 5432,
-    })
+    });
     // the pool with emit an error on behalf of any idle clients
     // it contains if a backend error or network partition happens
-      client.connect()
+    client.connect();
     // callback - checkout a client
-      let _this = this;
-      let pageIndex = this.ctx.request.body.pageIndex 
-      let pageSize = this.ctx.request.body.pageSize 
-      let  data = await client.query("SELECT * from tl_plan limit " + pageSize + " offset " + pageIndex)
-      let result = data.rows
-      let code = 1 
-      data = {result:result,code:code}
-      this.ctx.body = data
-      client.end()
-      //})
-
+    let _this = this;
+    let pageIndex = this.ctx.request.body.pageIndex;
+    let pageSize = this.ctx.request.body.pageSize;
+    let data = await client.query(
+      "SELECT * from tl_plan limit " + pageSize + " offset " + pageIndex
+    );
+    let result = data.rows;
+    let code = 1;
+    data = { result: result, code: code };
+    this.ctx.body = data;
+    client.end();
+    //})
   }
 }
-module.exports = PlanController
+module.exports = PlanController;

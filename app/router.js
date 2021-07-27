@@ -13,4 +13,5 @@ module.exports = (app) => {
   router.get("/file/download/:callid", controller.file.index);
   router.post("/Plan/List", controller.plan.index);
   router.get("/IpBc/User/Login", controller.user.login);
+  router.get("/IpBc/Role/List", controller.role.list);
 };
