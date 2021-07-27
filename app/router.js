@@ -14,4 +14,8 @@ module.exports = (app) => {
   router.post("/Plan/List", controller.plan.index);
   router.get("/IpBc/User/Login", controller.user.login);
   router.get("/IpBc/Role/List", controller.role.list);
+  router.get(
+    "/IpBc/Organization/Data/:organizationid",
+    controller.organize.query
+  );
 };
