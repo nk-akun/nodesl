@@ -18,4 +18,5 @@ module.exports = (app) => {
     "/IpBc/Organization/Data/:organizationid",
     controller.organize.query
   );
+  router.post("/IpBc/FolderMedia/Create", controller.folder.folderMediaCreate);
 };
