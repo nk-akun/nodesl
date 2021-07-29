@@ -2,7 +2,7 @@
 
 const Controller = require("egg").Controller;
 const PgClient = require("./config");
-const Date = require("./utils");
+const { Date, GetRandomId } = require("./utils");
 
 class FolderController extends Controller {
   async folderMediaCreate() {
@@ -50,8 +50,6 @@ class FolderController extends Controller {
     let foldername = params.foldername;
     let userid = params.userid;
 
-    console.log(folderId, foldername, userid);
-
     let numResult = await PgClient.query(
       "select count(*) from tl_folder where foldername = " +
         "'" +
@@ -69,6 +67,10 @@ class FolderController extends Controller {
       return;
     }
 
+    if (folderId == "") {
+      folderId = GetRandomId();
+    }
+    console.log(folderId, foldername, userid);
     let createTime = new Date().Format("yyyy-MM-dd HH:mm:ss");
     console.log(createTime);
     let dataResult = await PgClient.query(
