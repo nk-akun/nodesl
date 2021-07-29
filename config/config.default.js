@@ -16,6 +16,12 @@ module.exports = (appInfo) => {
         enable: false,
       },
     },
+    bodyParser: {
+      enableTypes: ["json", "form", "text"],
+      extendTypes: {
+        text: ["text/xml", "application/xml"],
+      },
+    },
   });
 
   // use for cookie sign key, should change to your own and keep security

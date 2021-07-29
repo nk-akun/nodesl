@@ -19,4 +19,5 @@ module.exports = (app) => {
     controller.organize.query
   );
   router.post("/IpBc/FolderMedia/Create", controller.folder.folderMediaCreate);
+  router.post("/IpBc/Folder/Create", controller.folder.folderCreate);
 };

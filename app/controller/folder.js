@@ -2,14 +2,13 @@
 
 const Controller = require("egg").Controller;
 const PgClient = require("./config");
+const Date = require("./utils");
 
 class FolderController extends Controller {
   async folderMediaCreate() {
-    let folderId = this.ctx.request.body.FolderID;
-    let mediaId = this.ctx.request.body.MediaID;
-
-    // console.log(this.ctx.request.header);
-    console.log(this.ctx.request.body);
+    let params = JSON.parse(this.ctx.request.body);
+    let folderId = params.FolderID;
+    let mediaId = params.MediaID;
 
     let numResult = await PgClient.query(
       "select count(*) from tr_folder_media where folderid = " +
@@ -29,13 +28,71 @@ class FolderController extends Controller {
     }
 
     let dataResult = await PgClient.query(
-      "insert into tr_folder_media values(" + folderId + "," + mediaId + ")"
+      "insert into tr_folder_media values(" +
+        "'" +
+        folderId +
+        "'" +
+        "," +
+        "'" +
+        mediaId +
+        "'" +
+        ")"
     );
 
-    console.log(dataResult);
+    // 信息补充
+    let data = dataResult.rowCount;
+    this.ctx.body = data;
+  }
+
+  async folderCreate() {
+    let params = JSON.parse(this.ctx.request.body);
+    let folderId = params.folderid;
+    let foldername = params.foldername;
+    let userid = params.userid;
+
+    console.log(folderId, foldername, userid);
+
+    let numResult = await PgClient.query(
+      "select count(*) from tl_folder where foldername = " +
+        "'" +
+        foldername +
+        "'" +
+        "and userid = " +
+        "'" +
+        userid +
+        "'"
+    );
+    let num = numResult.rows[0].count;
+    if (num > 0) {
+      // 说明已存在
+      this.ctx.body = "the record has exist!";
+      return;
+    }
+
+    let createTime = new Date().Format("yyyy-MM-dd HH:mm:ss");
+    console.log(createTime);
+    let dataResult = await PgClient.query(
+      "insert into tl_folder values(" +
+        "'" +
+        folderId +
+        "'" +
+        "," +
+        "'" +
+        foldername +
+        "'" +
+        "," +
+        "'" +
+        userid +
+        "'" +
+        "," +
+        "'" +
+        createTime +
+        "'" +
+        ")"
+    );
 
     // 信息补充
-    let data = dataResult;
+    let data = dataResult.rowCount;
     this.ctx.body = data;
   }
 }
