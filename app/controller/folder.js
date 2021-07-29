@@ -50,6 +50,7 @@ class FolderController extends Controller {
     let foldername = params.foldername;
     let userid = params.userid;
 
+    // 判断是否已存在
     let numResult = await PgClient.query(
       "select count(*) from tl_folder where foldername = " +
         "'" +
@@ -67,10 +68,12 @@ class FolderController extends Controller {
       return;
     }
 
+    // 生成随机id
     if (folderId == "") {
       folderId = GetRandomId();
     }
-    console.log(folderId, foldername, userid);
+    // console.log(folderId, foldername, userid);
+    // 生成当前时间
     let createTime = new Date().Format("yyyy-MM-dd HH:mm:ss");
     console.log(createTime);
     let dataResult = await PgClient.query(
@@ -91,6 +94,50 @@ class FolderController extends Controller {
         createTime +
         "'" +
         ")"
+    );
+
+    // 信息补充
+    let data = dataResult.rowCount;
+    this.ctx.body = data;
+  }
+
+  async folderEdit() {
+    let params = JSON.parse(this.ctx.request.body);
+    let folderId = params.folderid;
+    let foldername = params.foldername;
+    let userid = params.userid;
+
+    console.log(folderId, foldername, userid);
+
+    if (folderId == "") {
+      this.ctx.body = "the record do not exist!";
+      return;
+    }
+
+    // 判断是否存在此folderId
+    let numResult = await PgClient.query(
+      "select count(*) from tl_folder where folderid = " + "'" + folderId + "'"
+    );
+    let num = numResult.rows[0].count;
+    if (num == 0) {
+      // 说明不存在
+      this.ctx.body = "the record do not exist!";
+      return;
+    }
+
+    let dataResult = await PgClient.query(
+      "update tl_folder set foldername = " +
+        "'" +
+        foldername +
+        "'" +
+        ",userid = " +
+        "'" +
+        userid +
+        "'" +
+        "where folderid = " +
+        "'" +
+        folderId +
+        "'"
     );
 
     // 信息补充
