@@ -14,6 +14,11 @@ module.exports = (app) => {
   router.post("/Plan/List", controller.plan.index);
   router.get("/IpBc/User/Login", controller.user.login);
   router.get("/IpBc/Role/List", controller.role.list);
+  //   router.get("/IpBc/Role/Remove", controller.role.list);
+  //   router.get(
+  //     "/IpBc/Organization/Remove/:organizationid",
+  //     controller.organize.query
+  //   );
   router.get(
     "/IpBc/Organization/Data/:organizationid",
     controller.organize.query
@@ -21,4 +26,19 @@ module.exports = (app) => {
   router.post("/IpBc/FolderMedia/Create", controller.folder.folderMediaCreate);
   router.post("/IpBc/Folder/Create", controller.folder.folderCreate);
   router.post("/IpBc/Folder/Edit", controller.folder.folderEdit);
+  //   router.post("/IpBc/Folder/Remove", controller.folder.folderEdit);
+  //   router.post("/IpBc/File/RemoveList", controller.folder.folderEdit);
+  //   router.post("/IpBc/File/PreviewText", controller.folder.folderEdit);
+  //   router.post("/IpBc/File/UploadText", controller.folder.folderEdit);
+  //   router.post("/IpBc/File/UploadFiles", controller.folder.folderEdit);
+  //   router.post("/IpBc/File/List", controller.folder.folderEdit);
+  //   router.post("/IpBc/DeviceGroup/List", controller.folder.folderEdit);
+  //   router.post("/IpBc/Device/RemoveList", controller.folder.folderEdit);
+  //   router.post(
+  //     "/IpBc/Basic/Create/DeviceGroup/List",
+  //     controller.folder.folderEdit
+  //   );
+  //   router.post("/IpBc/Basic/Create", controller.folder.folderEdit);
+  //   router.post("/IpBc/Basic/List", controller.folder.folderEdit);
+  //   router.post("/IpBc/Folder/getTreeFiles", controller.folder.folderEdit);
 };
