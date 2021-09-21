@@ -35,7 +35,7 @@ class OrganizeController extends Controller {
 
     // 查询子org
     let childResult = await PgClient.query(
-      "select count(*) from ti_organization where parentid = " +
+      "select organizationid from ti_organization where parentid = " +
         "'" +
         organizationid +
         "'"
