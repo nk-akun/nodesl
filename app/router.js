@@ -15,10 +15,10 @@ module.exports = (app) => {
   router.get("/IpBc/User/Login", controller.user.login);
   router.get("/IpBc/Role/List", controller.role.list);
   router.delete("/IpBc/Role/Remove/:roleid", controller.role.remove);
-  //   router.get(
-  //     "/IpBc/Organization/Remove/:organizationid",
-  //     controller.organize.query
-  //   );
+  router.delete(
+    "/IpBc/Organization/Remove/:organizationid",
+    controller.organize.remove
+  );
   router.get(
     "/IpBc/Organization/Data/:organizationid",
     controller.organize.query

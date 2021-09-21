@@ -20,10 +20,10 @@ class RoleController extends Controller {
     // console.log(data);
     if (data.rowCount > 0) {
       this.ctx.body = data.rowCount;
-      this.ctx.set("code", 1);
+      this.ctx.message = "操作成功";
     } else {
+      this.ctx.body = 0;
       this.ctx.message = "删除失败";
-      this.ctx.set("code", 0);
     }
   }
 }

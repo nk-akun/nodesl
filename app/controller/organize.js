@@ -29,6 +29,20 @@ class OrganizeController extends Controller {
     data.childnum = childNum;
     this.ctx.body = data;
   }
+
+  async remove() {
+    let organizationid = this.ctx.params.organizationid;
+
+    // 查询子org
+    let childResult = await PgClient.query(
+      "select count(*) from ti_organization where parentid = " +
+        "'" +
+        organizationid +
+        "'"
+    );
+
+    console.log(childResult);
+  }
 }
 
 module.exports = OrganizeController;
