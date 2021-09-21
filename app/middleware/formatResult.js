@@ -3,6 +3,7 @@ module.exports = (options, app) => {
     await next();
     let body = ctx.body;
     let succ = true;
+    // TODO: fail添加
     let result = {};
     if (succ == true) {
       result = {

@@ -14,7 +14,7 @@ module.exports = (app) => {
   router.post("/Plan/List", controller.plan.index);
   router.get("/IpBc/User/Login", controller.user.login);
   router.get("/IpBc/Role/List", controller.role.list);
-  //   router.get("/IpBc/Role/Remove", controller.role.list);
+  router.delete("/IpBc/Role/Remove/:roleid", controller.role.remove);
   //   router.get(
   //     "/IpBc/Organization/Remove/:organizationid",
   //     controller.organize.query

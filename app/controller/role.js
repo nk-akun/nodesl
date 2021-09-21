@@ -11,6 +11,15 @@ class RoleController extends Controller {
     // console.log(data);
     this.ctx.body = data.rows[0];
   }
+
+  async remove() {
+    let roleId = this.ctx.params.roleid;
+    let data = await PgClient.query(
+      "delete from ti_role where roleid = " + "'" + roleId + "'"
+    );
+    console.log(data);
+    // this.ctx.body = data.rows[0];
+  }
 }
 
 module.exports = RoleController;
