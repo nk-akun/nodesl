@@ -11,6 +11,12 @@ module.exports = (options, app) => {
         code: 1,
         tocket: "",
       };
+      if (ctx.get("code") != null) {
+        result.code = ctx.get("code");
+      }
+      if (ctx.message != "") {
+        result.message = ctx.message;
+      }
     }
     ctx.body = result;
   };
