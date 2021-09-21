@@ -27,9 +27,7 @@ class PlanController extends Controller {
       "SELECT * from tl_plan limit " + pageSize + " offset " + pageIndex
     );
     let result = data.rows;
-    let code = 1;
-    data = { result: result, code: code };
-    this.ctx.body = data;
+    this.ctx.body = result;
     client.end();
     //})
   }
