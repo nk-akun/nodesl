@@ -41,7 +41,23 @@ class OrganizeController extends Controller {
         "'"
     );
 
-    console.log(childResult);
+    // push子org id
+    let orgIds = [organizationid];
+    for (var child in childResult.rows) {
+      orgIds.push(child.organizationid);
+    }
+
+    for (var orgId in childIds) {
+      await PgClient.query(
+        "delete from ti_organization where organizationid = " +
+          "'" +
+          orgId +
+          "'"
+      );
+    }
+
+    data = orgIds.length;
+    this.ctx.body = data;
   }
 }
 
