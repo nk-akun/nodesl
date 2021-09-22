@@ -7,10 +7,14 @@
     "declarations": true
   },
   "dependencies": {
+    "dgram": "^1.0.1",
     "egg": "^2.15.1",
     "egg-cors": "^2.2.3",
     "egg-scripts": "^2.11.0",
-    "pg": "^7.5.0"
+    "node-uuid": "^1.4.8",
+    "pg": "^7.5.0",
+    "urlencode": "^1.1.0",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "autod": "^3.0.1",

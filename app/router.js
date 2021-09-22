@@ -9,11 +9,39 @@ module.exports = (app) => {
   router.get("/organization/:organizationid", controller.watcher.index);
   router.post("/watcher/:organizationid", controller.watcherState.activate);
   router.post("/watcher/update/:organizationid", controller.watcher.update);
+  router.post(
+    "/watcher/left/:organizationid",
+    controller.watcherState.activate_left
+  );
+  router.post(
+    "/watcher/right/:organizationid",
+    controller.watcherState.activate_right
+  );
+  router.post(
+    "/watcher/out/:organizationid",
+    controller.watcherState.activate_out
+  );
+  router.post(
+    "/watcher/update/left/:organizationid",
+    controller.watcher.update_left
+  );
+  router.post(
+    "/watcher/update/right/:organizationid",
+    controller.watcher.update_right
+  );
+  router.post(
+    "/watcher/update/out/:organizationid",
+    controller.watcher.update_out
+  );
+
   router.post("/task/update/:planid", controller.task.update);
   router.get("/file/download/:callid", controller.file.index);
   router.post("/Plan/List", controller.plan.list); // 广播预约列表,TODO: fix
   router.post("/IpBc/Plan/Create", controller.plan.create); // 广播预约
   router.post("/IpBc/Plan/RemoveList", controller.plan.removeList); // 广播预约
+  router.get("/Plan/Folders/:planid", controller.plan.folder);
+  router.get("/Plan/Devices/:planid", controller.plan.device);
+
   router.get("/IpBc/User/Login", controller.user.login);
   router.post("/IpBc/User/Create", controller.user.create);
   router.post("/IpBc/User/List", controller.user.list);
@@ -38,6 +66,37 @@ module.exports = (app) => {
     controller.folder.folderRemove // TODO: test
   );
   router.post("/IpBc/Device/Create", controller.device.create);
+
+  router.get("/alarm_control/:organizationid", controller.alarmControl.index);
+  router.post(
+    "/alarm_control/update/:organizationid",
+    controller.alarmControl.update
+  );
+  router.post("/alarm_message/update", controller.alarmControl.updateMessage);
+  router.post("/alarm_message/get", controller.alarmControl.getMessage);
+  router.post("/DeviceGroup/Create", controller.deviceGroup.create);
+  router.delete("/DeviceGroup/Remove", controller.deviceGroup.remove);
+  router.post("/DeviceGroup/RemoveList", controller.deviceGroup.removeList);
+  router.get(
+    "/DeviceGroup/Detail/:devicegroupid",
+    controller.deviceGroup.detail
+  );
+  router.post("/DeviceGroup/List", controller.deviceGroup.list);
+  router.post("/Conference/Detail", controller.deviceGroup.conf);
+  router.get("/Role/getDeviceGroup/:roleid", controller.deviceGroup.role);
+  router.get("/Organization/getDeviceGroup/:orgid", controller.deviceGroup.org);
+  router.get("/kbs_wc/:testid", controller.hello.index);
+  router.post("/Device/CreateMulticast", controller.device.create_multicast);
+  router.post("/Device/Deletes", controller.device.deletes);
+  router.get("/Device/Detail/:deviceid", controller.device.detail);
+  router.post("/Device/All", controller.device.all);
+  router.post("/Device/Vertos", controller.device.vertos);
+  router.post("/Callrecord/Create", controller.callrecord.index);
+  router.post(
+    "/Callrecord/List/:organizationid/:filetype",
+    controller.callrecord.list
+  );
+  router.post("/Callrecord/Description", controller.callrecord.detail);
   //   router.post("/IpBc/Folder/getTreeFiles", controller.folder.folderEdit);
   //   router.post("/IpBc/File/RemoveList", controller.folder.folderEdit);
   //   router.post("/IpBc/File/PreviewText", controller.folder.folderEdit);
