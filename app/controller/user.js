@@ -114,6 +114,41 @@ class UserController extends Controller {
 
     this.ctx.body = userData.rowCount;
   }
+
+  async edit() {
+    let orgId = this.ctx.request.body.OrganizationID;
+    let username = this.ctx.request.body.username;
+    // userRoles在数据表中没有体现
+    let password = this.ctx.request.body.password;
+    let userid = this.ctx.request.body.userid;
+
+    let editData = await PgClient.query(
+      "update ti_user set organizationid = " +
+        "'" +
+        orgId +
+        "'" +
+        "," +
+        "username = " +
+        "'" +
+        username +
+        "'" +
+        "," +
+        "password = " +
+        "'" +
+        password +
+        "'" +
+        "where userid = " +
+        "'" +
+        userid +
+        "'"
+    );
+
+    if (editData.rowCount > 0) {
+      this.ctx.body = editData.rowCount;
+    } else {
+      this.ctx.message = "修改失败!";
+    }
+  }
 }
 
 module.exports = UserController;
