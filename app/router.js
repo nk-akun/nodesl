@@ -11,8 +11,8 @@ module.exports = (app) => {
   router.post("/watcher/update/:organizationid", controller.watcher.update);
   router.post("/task/update/:planid", controller.task.update);
   router.get("/file/download/:callid", controller.file.index);
-  router.post("/Plan/List", controller.plan.index); // 广播预约列表,TODO: fix
-  //   router.post("/Plan/Create", controller.plan.index); // 广播预约
+  router.post("/Plan/List", controller.plan.list); // 广播预约列表,TODO: fix
+  router.post("/Plan/Create", controller.plan.create); // 广播预约
   router.get("/IpBc/User/Login", controller.user.login);
   router.post("/IpBc/User/Create", controller.user.create);
   router.post("/IpBc/User/List", controller.user.list);
