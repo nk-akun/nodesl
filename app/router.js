@@ -36,8 +36,8 @@ module.exports = (app) => {
     "/IpBc/Folder/Remove/:folderid",
     controller.folder.folderRemove // TODO: test
   );
+  router.post("/IpBc/Device/Create", controller.device.create);
   //   router.post("/IpBc/Folder/getTreeFiles", controller.folder.folderEdit);
-  //   router.post("/IpBc/Device/Create", controller.folder.folderEdit); TODO: 重要
   //   router.post("/IpBc/File/RemoveList", controller.folder.folderEdit);
   //   router.post("/IpBc/File/PreviewText", controller.folder.folderEdit);
   //   router.post("/IpBc/File/UploadText", controller.folder.folderEdit);
