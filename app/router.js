@@ -18,7 +18,7 @@ module.exports = (app) => {
   router.post("/IpBc/User/List", controller.user.list);
   router.get("/IpBc/User/Detail/:userid", controller.user.detail);
   router.put("/IpBc/User/Edit", controller.user.edit);
-  //   router.get("/IpBc/User/Remove/:userid", controller.user.login);
+  router.delete("/IpBc/User/Remove/:userid", controller.user.remove);
   router.get("/IpBc/Role/List", controller.role.list);
   router.delete("/IpBc/Role/Remove/:roleid", controller.role.remove);
   router.delete(

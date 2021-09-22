@@ -149,6 +149,19 @@ class UserController extends Controller {
       this.ctx.message = "修改失败!";
     }
   }
+
+  async remove() {
+    let userid = this.ctx.params.userid;
+    let remvData = await PgClient.query(
+      "delete from ti_user where userid = " + "'" + userid + "'"
+    );
+
+    if (remvData.rowCount > 0) {
+      this.ctx.body = remvData.rowCount;
+    } else {
+      this.ctx.message = "删除失败!";
+    }
+  }
 }
 
 module.exports = UserController;
