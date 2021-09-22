@@ -57,7 +57,18 @@ class UserController extends Controller {
         );
         users[i].departname = departData.rows[0].departname;
       }
-      users[i].rolename = "监控中心"; // TODO: 暂时写死，查清user表与role表关系后补齐
+      let roleData = await PgClient.query(
+        "select roleid from tr_user_role where userid=" + "'" + userid + "'"
+      );
+      if (roleData.rowCount > 0) {
+        let roleid = roleData.rows[0].roleid;
+        let roleInfo = await PgClient.query(
+          "select * from ti_role where roleid=" + "'" + roleid + "'"
+        );
+        if (roleInfo.rowCount > 0) {
+          users[i].rolename = roleInfo.rows[0].rolename;
+        }
+      }
     }
     this.ctx.body = users;
   }
@@ -68,8 +79,30 @@ class UserController extends Controller {
       "select * from ti_user where userid = " + "'" + userid + "'"
     );
 
+    if (userData.rowCount == 0) {
+      this.ctx.message = "查询失败!";
+      return;
+    }
+
+    let userInfo = userData.rows[0];
+    userInfo.userRoles = [];
+    let userRoles = [];
+
+    let roleData = await PgClient.query(
+      "select roleid from tr_user_role where userid=" + "'" + userid + "'"
+    );
+    if (roleData.rowCount > 0) {
+      for (var idx in roleData.rows) {
+        let tmp = {};
+        tmp.roleid = roleData.rows[idx].roleid;
+        tmp.userid = userid;
+        userRoles.push(tmp);
+      }
+    }
+    userInfo.userRoles = userRoles;
+
     if (userData.rowCount > 0) {
-      this.ctx.body = userData.rows[0];
+      this.ctx.body = userInfo;
     } else {
       this.ctx.message = "查询失败!";
     }

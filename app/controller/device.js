@@ -13,7 +13,7 @@ class DeviceController extends Controller {
     let status = 1;
 
     let maxIndex = await PgClient.query(
-      "select max(sortindex) as max_index from ti_user"
+      "select max(sortindex) as max_index from ti_device"
     );
 
     let sortIndex = parseInt(maxIndex.rows[0].max_index) + 1;
