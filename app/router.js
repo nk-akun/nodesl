@@ -14,7 +14,7 @@ module.exports = (app) => {
   router.post("/Plan/List", controller.plan.index); // 广播预约列表,TODO: fix
   //   router.post("/Plan/Create", controller.plan.index); // 广播预约
   router.get("/IpBc/User/Login", controller.user.login);
-  //   router.post("/IpBc/User/Create", controller.user.list);
+  router.post("/IpBc/User/Create", controller.user.create);
   router.post("/IpBc/User/List", controller.user.list); //organizationid: "b202669251a046bbbc727ff3fb25f9f4"
   //   router.get("/IpBc/User/Remove/:userid", controller.user.login);
   router.get("/IpBc/Role/List", controller.role.list);

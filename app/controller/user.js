@@ -2,6 +2,7 @@
 
 const Controller = require("egg").Controller;
 const PgClient = require("./config");
+const { GetRandomId } = require("./utils");
 
 class UserController extends Controller {
   async login() {
@@ -56,8 +57,49 @@ class UserController extends Controller {
         );
         users[i].departname = departData.rows[0].departname;
       }
+      users[i].rolename = "监控中心"; // TODO: 暂时写死，查清user表与role表关系后补齐
     }
     this.ctx.body = users;
+  }
+
+  async create() {
+    let orgId = this.ctx.request.body.OrganizationID;
+    let username = this.ctx.request.body.username;
+    // userRoles在数据表中没有体现
+    let password = this.ctx.request.body.password;
+    let userid = GetRandomId();
+
+    // TODO: 此处有并发风险
+    let maxIndex = await PgClient.query(
+      "select max(sortindex) as max_index from ti_user"
+    );
+
+    let sortIndex = parseInt(maxIndex.rows[0].max_index) + 1;
+    let userData = await PgClient.query(
+      "insert into ti_user (userid,username,password,organizationid,sortindex) values(" +
+        "'" +
+        userid +
+        "'" +
+        "," +
+        "'" +
+        username +
+        "'" +
+        "," +
+        "'" +
+        password +
+        "'" +
+        "," +
+        "'" +
+        orgId +
+        "'" +
+        "," +
+        "'" +
+        sortIndex +
+        "'" +
+        ")"
+    );
+
+    this.ctx.body = userData.rowCount;
   }
 }
 
