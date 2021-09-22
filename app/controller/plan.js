@@ -111,5 +111,22 @@ class PlanController extends Controller {
       this.ctx.message = "添加失败";
     }
   }
+
+  async removeList() {
+    let planIds = [];
+    for (var idx in this.ctx.request.body) {
+      planIds.push(this.ctx.request.body[idx]);
+    }
+
+    let succNum = 0;
+    for (var idx in planIds) {
+      await PgClient.query(
+        "delete from tl_plan where planid = " + "'" + planIds[idx] + "'"
+      );
+      succNum++;
+    }
+
+    this.ctx.body = succNum;
+  }
 }
 module.exports = PlanController;
