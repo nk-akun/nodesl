@@ -74,38 +74,42 @@ module.exports = (app) => {
   );
   router.post("/alarm_message/update", controller.alarmControl.updateMessage);
   router.post("/alarm_message/get", controller.alarmControl.getMessage);
-  router.post("/DeviceGroup/Create", controller.deviceGroup.create);
-  router.delete("/DeviceGroup/Remove", controller.deviceGroup.remove);
-  router.post("/DeviceGroup/RemoveList", controller.deviceGroup.removeList);
+  router.post("/IpBc/DeviceGroup/Create", controller.deviceGroup.create);
+  router.delete("/IpBc/DeviceGroup/Remove", controller.deviceGroup.remove);
+  router.post(
+    "/IpBc/DeviceGroup/RemoveList",
+    controller.deviceGroup.removeList
+  );
   router.get(
     "/DeviceGroup/Detail/:devicegroupid",
     controller.deviceGroup.detail
   );
-  router.post("/DeviceGroup/List", controller.deviceGroup.list);
+  router.post("/IpBc/DeviceGroup/List", controller.deviceGroup.list);
   router.post("/Conference/Detail", controller.deviceGroup.conf);
   router.get("/Role/getDeviceGroup/:roleid", controller.deviceGroup.role);
   router.get("/Organization/getDeviceGroup/:orgid", controller.deviceGroup.org);
   router.get("/kbs_wc/:testid", controller.hello.index);
-  router.post("/Device/CreateMulticast", controller.device.create_multicast);
-  router.post("/Device/Deletes", controller.device.deletes);
-  router.get("/Device/Detail/:deviceid", controller.device.detail);
-  router.post("/Device/All", controller.device.all);
-  router.post("/Device/Vertos", controller.device.vertos);
-  router.post("/Callrecord/Create", controller.callrecord.index);
   router.post(
-    "/Callrecord/List/:organizationid/:filetype",
+    "/IpBc/Device/CreateMulticast",
+    controller.device.create_multicast
+  );
+  router.post("/IpBc/Device/Deletes", controller.device.deletes);
+  router.get("/IpBc/Device/Detail/:deviceid", controller.device.detail);
+  router.post("/IpBc/Device/All", controller.device.all);
+  router.post("/IpBc/Device/Vertos", controller.device.vertos);
+  router.post("/IpBc/Callrecord/Create", controller.callrecord.index);
+  router.post(
+    "/IpBc/Callrecord/List/:organizationid/:filetype",
     controller.callrecord.list
   );
-  router.post("/Callrecord/Description", controller.callrecord.detail);
+  router.post("/IpBc/Callrecord/Description", controller.callrecord.detail);
+
   //   router.post("/IpBc/Folder/getTreeFiles", controller.folder.folderEdit);
   //   router.post("/IpBc/File/RemoveList", controller.folder.folderEdit);
   //   router.post("/IpBc/File/PreviewText", controller.folder.folderEdit);
   //   router.post("/IpBc/File/UploadText", controller.folder.folderEdit);
   //   router.post("/IpBc/File/UploadFiles", controller.folder.folderEdit);
   //   router.post("/IpBc/File/List", controller.folder.folderEdit);
-
-  //   router.post("/IpBc/DeviceGroup/List", controller.folder.folderEdit);
-  //   router.post("/IpBc/Device/RemoveList", controller.folder.folderEdit);
   //   router.post(
   //     "/IpBc/Basic/Create/DeviceGroup/List",
   //     controller.folder.folderEdit
