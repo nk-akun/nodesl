@@ -128,5 +128,55 @@ class PlanController extends Controller {
 
     this.ctx.body = succNum;
   }
+
+  async device() {
+    this.data = "";
+    const client = new Client({
+      user: "freeswitch",
+      host: "127.0.0.1",
+      database: "ipbc",
+      password: "y2u4evam",
+      port: 5432,
+    });
+    client.connect();
+    let planid = this.ctx.params.planid;
+    let data = await client.query(
+      "SELECT * from tr_plan_feature where planid =" + "'" + planid + "'"
+    );
+    let result = data.rows;
+    let ret = [];
+    for (let row of result) {
+      ret.push(row.deviceid);
+    }
+    this.ctx.body = ret;
+    client.end();
+    //})
+  }
+  async folder() {
+    this.data = "";
+    const client = new Client({
+      user: "freeswitch",
+      host: "127.0.0.1",
+      database: "ipbc",
+      password: "y2u4evam",
+      port: 5432,
+    });
+    client.connect();
+    let planid = this.ctx.params.planid;
+    let data = await client.query(
+      "SELECT planid,tr_plan_media.folderid,foldername  from tr_plan_media inner join tl_folder on tl_folder.folderid =tr_plan_media.folderid where planid =" +
+        "'" +
+        planid +
+        "'"
+    );
+    let result = data.rows;
+    let ret = [];
+    for (let row of result) {
+      ret.push({ folderid: row.folderid, foldername: row.foldername });
+    }
+    this.ctx.body = ret;
+    client.end();
+    //})
+  }
 }
 module.exports = PlanController;
