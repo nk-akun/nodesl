@@ -62,6 +62,19 @@ class UserController extends Controller {
     this.ctx.body = users;
   }
 
+  async detail() {
+    let userid = this.ctx.params.userid;
+    let userData = await PgClient.query(
+      "select * from ti_user where userid = " + "'" + userid + "'"
+    );
+
+    if (userData.rowCount > 0) {
+      this.ctx.body = userData.rows[0];
+    } else {
+      this.ctx.message = "查询失败!";
+    }
+  }
+
   async create() {
     let orgId = this.ctx.request.body.OrganizationID;
     let username = this.ctx.request.body.username;
