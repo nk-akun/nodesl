@@ -43,8 +43,8 @@ class OrganizeController extends Controller {
 
     // push子org id
     let orgIds = [organizationid];
-    for (var child in childResult.rows) {
-      orgIds.push(child.organizationid);
+    for (var idx in childResult.rows) {
+      orgIds.push(childResult.rows[idx].organizationid);
     }
 
     console.log(orgIds);
