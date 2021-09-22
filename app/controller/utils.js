@@ -1,5 +1,7 @@
 "use strict";
 
+const PgClient = require("./config");
+
 Date.prototype.Format = function (fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份
@@ -71,4 +73,13 @@ function GetRandomId() {
   return nums;
 }
 
-module.exports = { Date, GetRandomId };
+function GetMaxSortIndex(tablename) {
+  let maxIndex = PgClient.query(
+    "select max(sortindex) as max_index from " + "'" + tablename + "'"
+  );
+
+  let sortIndex = parseInt(maxIndex.rows[0].max_index) + 1;
+  return sortIndex;
+}
+
+module.exports = { Date, GetRandomId, GetMaxSortIndex };

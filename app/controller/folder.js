@@ -144,6 +144,34 @@ class FolderController extends Controller {
     let data = dataResult.rowCount;
     this.ctx.body = data;
   }
+
+  async folderRemove() {
+    let folderId = this.ctx.params.folderid;
+
+    let numResult = await PgClient.query(
+      "select count(*) from tl_folder where folderid = " + "'" + folderId + "'"
+    );
+    let num = numResult.rows[0].count;
+    if (num == 0) {
+      // 说明不存在
+      this.ctx.body = "the record do not exist!";
+      return;
+    }
+
+    let dataResult = await PgClient.query(
+      "delete from tl_folder where folderid = " + "'" + folderId + "'"
+    );
+
+    // 信息补充
+    let data = dataResult.rowCount;
+    if (data > 0) {
+      this.ctx.body = data;
+      this.ctx.message = "操作成功";
+    } else {
+      this.ctx.body = 0;
+      this.ctx.message = "操作失败";
+    }
+  }
 }
 
 module.exports = FolderController;
