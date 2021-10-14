@@ -55,6 +55,10 @@ module.exports = (app) => {
     controller.organize.remove
   );
   router.get(
+    "/IpBc/Organization/Detail/:organizationid",
+    controller.organize.query
+  );
+  router.get(
     "/IpBc/Organization/Data/:organizationid",
     controller.organize.query
   );
