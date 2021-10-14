@@ -1,4 +1,5 @@
 const Controller = require("egg").Controller;
+const PgClient = require("./config");
 const { Pool, Client } = require("pg");
 
 //this initializes a connection pool
@@ -8,20 +9,13 @@ const { Pool, Client } = require("pg");
 class WatcherController extends Controller {
   async index() {
     this.data = "";
-    const client = new Client({
-      user: "freeswitch",
-      host: "127.0.0.1",
-      database: "ipbc",
-      password: "y2u4evam",
-      port: 5432,
-    });
-    // the pool with emit an error on behalf of any idle clients
-    // it contains if a backend error or network partition happens
-    client.connect();
     // callback - checkout a client
     let organizationid = this.ctx.params.organizationid;
+
+    console.log(organizationid);
+
     let _this = this;
-    let data = await client.query(
+    let data = await PgClient.query(
       "SELECT * from ti_organization where organizationid = " +
         "'" +
         organizationid +
@@ -29,8 +23,10 @@ class WatcherController extends Controller {
     );
     //.then((res)=>{
     //  this.data = res.rows
-    client.end();
     //})
+
+    console.log(data);
+
     let ret = {};
     ret.watcher = data.rows[0].watcherid;
     ret.enable_watcher = data.rows[0].enable_watcher;
