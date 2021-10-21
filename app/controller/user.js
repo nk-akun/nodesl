@@ -58,7 +58,10 @@ class UserController extends Controller {
         users[i].departname = departData.rows[0].departname;
       }
       let roleData = await PgClient.query(
-        "select roleid from tr_user_role where userid=" + "'" + userid + "'"
+        "select roleid from tr_user_role where userid=" +
+          "'" +
+          users[i].userid +
+          "'"
       );
       if (roleData.rowCount > 0) {
         let roleid = roleData.rows[0].roleid;
