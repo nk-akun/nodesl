@@ -107,7 +107,14 @@ module.exports = (app) => {
     controller.callrecord.list
   );
   router.post("/IpBc/Callrecord/Description", controller.callrecord.detail);
-
+  router.post(
+    "/IpBc/Feature/getFeatureByOrg/:organizationid",
+    controller.feature.getFeatureByOrg
+  );
+  router.get(
+    "/IpBc/Feature/getFeatureByOrg/:organizationid",
+    controller.feature.getFeatureByOrg
+  );
   //   router.post("/IpBc/Folder/getTreeFiles", controller.folder.folderEdit);
   //   router.post("/IpBc/File/RemoveList", controller.folder.folderEdit);
   //   router.post("/IpBc/File/PreviewText", controller.folder.folderEdit);
@@ -120,5 +127,4 @@ module.exports = (app) => {
   //   );
   //   router.post("/IpBc/Basic/Create", controller.folder.folderEdit);
   //   router.post("/IpBc/Basic/List", controller.folder.folderEdit);
-  //   /IpBc/Feature/getFeatureByOrg/b202669251a046bbbc727ff3fb25f9f4?flag=false
 };
