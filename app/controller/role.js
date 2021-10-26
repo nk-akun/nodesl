@@ -9,7 +9,7 @@ class RoleController extends Controller {
       "select roleid,rolename,childdata,sortindex from ti_role"
     );
     // console.log(data);
-    this.ctx.body = data.rows[0];
+    this.ctx.body = data.rows;
   }
 
   async remove() {
