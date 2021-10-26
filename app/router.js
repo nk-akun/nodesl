@@ -49,6 +49,7 @@ module.exports = (app) => {
   router.put("/IpBc/User/Edit", controller.user.edit);
   router.delete("/IpBc/User/Remove/:userid", controller.user.remove);
   router.get("/IpBc/Role/List", controller.role.list);
+  router.post("/IpBc/Role/List", controller.role.list);
   router.delete("/IpBc/Role/Remove/:roleid", controller.role.remove);
   router.delete(
     "/IpBc/Organization/Remove/:organizationid", // TODO: test
