@@ -312,8 +312,7 @@ class DeviceGroupController extends Controller {
     let confname = this.ctx.request.body.confname;
     let organizationid = this.ctx.request.body.organizationid;
     let roleid = this.ctx.request.body.roleid;
-    let data = {};
-    data.result = [];
+    let data = [];
     client.connect();
 
     let organization_result = await client.query(
@@ -331,7 +330,7 @@ class DeviceGroupController extends Controller {
     if (confname != undefined) {
       switch (confname) {
         case "voiceCall":
-          data.result.push({
+          data.push({
             conf_num: organization_result.rows[0].voicecallid,
             conf_name:
               organization_result.rows[0].voicecallid + "-scc.ieyeplus.com",
@@ -342,7 +341,7 @@ class DeviceGroupController extends Controller {
               row.devicegroup_extn.slice(0, 2) == "81" ||
               row.devicegroup_extn.slice(0, 2) == "82"
             )
-              data.result.push({
+              data.push({
                 conf_num: row.devicegroup_extn,
                 conf_name: row.devicegroup_extn + "-scc.ieyeplus.com",
                 group_name: row.name,
@@ -350,7 +349,7 @@ class DeviceGroupController extends Controller {
           });
           break;
         case "ipBroad":
-          data.result.push({
+          data.push({
             conf_num: organization_result.rows[0].broadid,
             conf_name:
               organization_result.rows[0].broadid + "-scc.ieyeplus.com",
@@ -358,7 +357,7 @@ class DeviceGroupController extends Controller {
           });
           group_result.rows.forEach((row) => {
             if (row.devicegroup_extn.slice(0, 2) == "85")
-              data.result.push({
+              data.push({
                 conf_num: row.devicegroup_extn,
                 conf_name: row.devicegroup_extn + "-scc.ieyeplus.com",
                 group_name: row.name,
@@ -366,7 +365,7 @@ class DeviceGroupController extends Controller {
           });
           break;
         case "radio":
-          data.result.push({
+          data.push({
             conf_num: organization_result.rows[0].meetingid,
             conf_name:
               organization_result.rows[0].meetingid + "-scc.ieyeplus.com",
@@ -374,7 +373,7 @@ class DeviceGroupController extends Controller {
           });
           group_result.rows.forEach((row) => {
             if (row.devicegroup_extn.slice(0, 2) == "83")
-              data.result.push({
+              data.push({
                 conf_num: row.devicegroup_extn,
                 conf_name: row.devicegroup_extn + "-scc.ieyeplus.com",
                 group_name: row.name,
@@ -382,11 +381,10 @@ class DeviceGroupController extends Controller {
           });
           break;
       }
-      data.code = 1;
       this.ctx.body = data;
     } else {
-      data.code = 0;
-      data.result = "参数格式错误，请核对后重新测试";
+      data = "参数格式错误，请核对后重新测试";
+      this.ctx.message = "失败";
       this.ctx.body = data;
     }
     client.end();
@@ -401,7 +399,7 @@ class DeviceGroupController extends Controller {
     });
 
     let orgid = this.ctx.params.orgid;
-    let data = {};
+    let data = [];
     client.connect();
     if (orgid != undefined) {
       let roleid_object = await client.query(
@@ -417,10 +415,8 @@ class DeviceGroupController extends Controller {
           roleid +
           "'"
       );
-      data.code = 1;
-      data.result = [];
       devicegroups_object.rows.forEach((row) => {
-        data.result.push({
+        data.push({
           conf_num: row.devicegroup_extn,
           conf_name: row.devicegroup_extn + "-scc.ieyeplus.com",
           group_name: row.name,
@@ -429,8 +425,8 @@ class DeviceGroupController extends Controller {
       });
       this.ctx.body = data;
     } else {
-      data.code = 0;
-      data.result = "参数格式错误，请核对后重新测试";
+      data = "参数格式错误，请核对后重新测试";
+      this.ctx.message = "失败";
       this.ctx.body = data;
     }
     client.end();
