@@ -7,7 +7,7 @@ const { Date, GetRandomId } = require("./utils");
 class FeatureController extends Controller {
   async getFeatureByOrg() {
     let flag = this.ctx.query.flag;
-    if (flag) {
+    if (flag == "true") {
       this.ctx.body = {};
       return;
     }
