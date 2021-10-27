@@ -25,8 +25,8 @@ class OrganizeController extends Controller {
     );
 
     // 信息补充
-    let data = dataResult.rows;
-    data[0].childnum = childNum;
+    let data = dataResult.rows[0];
+    data.childnum = childNum;
     this.ctx.body = data;
   }
 
