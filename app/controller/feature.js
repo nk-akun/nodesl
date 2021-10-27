@@ -8,7 +8,7 @@ class FeatureController extends Controller {
   async getFeatureByOrg() {
     let flag = this.ctx.query.flag;
     if (flag == "true") {
-      this.ctx.body = {};
+      this.ctx.body = null;
       return;
     }
 
