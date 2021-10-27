@@ -6,6 +6,12 @@ const { Date, GetRandomId } = require("./utils");
 
 class FeatureController extends Controller {
   async getFeatureByOrg() {
+    let flag = this.ctx.query.flag;
+    if (flag) {
+      this.ctx.body = {};
+      return;
+    }
+
     let organizationid = this.ctx.params.organizationid;
     let featureResult = await PgClient.query(
       "select * from ti_featurebase where organizationid = " +
