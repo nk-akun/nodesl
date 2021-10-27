@@ -57,11 +57,11 @@ module.exports = (app) => {
   );
   router.get(
     "/IpBc/Organization/Detail/:organizationid",
-    controller.organize.query
+    controller.organize.queryDetail
   );
   router.get(
     "/IpBc/Organization/Data/:organizationid",
-    controller.organize.query
+    controller.organize.queryData
   );
   router.post("/IpBc/FolderMedia/Create", controller.folder.folderMediaCreate);
   router.post("/IpBc/Folder/Create", controller.folder.folderCreate);

@@ -4,7 +4,7 @@ const Controller = require("egg").Controller;
 const PgClient = require("./config");
 
 class OrganizeController extends Controller {
-  async query() {
+  async queryData() {
     let organizationid = this.ctx.params.organizationid;
 
     // 查询子org
@@ -25,8 +25,29 @@ class OrganizeController extends Controller {
     );
 
     // 信息补充
-    let data = dataResult.rows[0];
-    data.childnum = childNum;
+    let data = dataResult.rows;
+    data[0].childnum = childNum;
+    this.ctx.body = data;
+  }
+
+  async queryDetail() {
+    let organizationid = this.ctx.params.organizationid;
+
+    // 查询详细信息
+    let dataResult = await PgClient.query(
+      "select organizationid,orgname,orgcode from ti_organization where organizationid = " +
+        "'" +
+        organizationid +
+        "'"
+    );
+
+    // 信息补充
+    let data = {};
+    if (dataResult.rows.length > 0) {
+      data = dataResult.rows[0];
+    } else {
+      this.ctx.message = "查询失败，无此记录";
+    }
     this.ctx.body = data;
   }
 
