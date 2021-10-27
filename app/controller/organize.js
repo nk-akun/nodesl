@@ -35,7 +35,7 @@ class OrganizeController extends Controller {
 
     // 查询详细信息
     let dataResult = await PgClient.query(
-      "select organizationid,orgname,orgcode from ti_organization where organizationid = " +
+      "select * from ti_organization where organizationid = " +
         "'" +
         organizationid +
         "'"
