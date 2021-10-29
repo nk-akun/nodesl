@@ -98,7 +98,7 @@ module.exports = (app) => {
     "/IpBc/Device/CreateMulticast",
     controller.device.create_multicast
   );
-  router.post("/IpBc/Device/Deletes", controller.device.deletes);
+  router.post("/IpBc/Device/deletes", controller.device.deletes);
   router.get("/IpBc/Device/Detail/:deviceid", controller.device.detail);
   router.post("/IpBc/Device/All", controller.device.all);
   router.post("/IpBc/Device/Vertos", controller.device.vertos);
