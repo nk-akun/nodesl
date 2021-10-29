@@ -250,33 +250,24 @@ class DeviceController extends Controller {
     client.end();
   }
   async deletes() {
-    const client = new Client({
-      user: "freeswitch",
-      host: "127.0.0.1",
-      database: "ipbc",
-      password: "y2u4evam",
-      port: 5432,
-    });
-    client.connect();
     let requests = this.ctx.request.body;
     let data = [];
     for (let element of requests) {
-      await client.query(
-        "delete from ti_device where deviceid = " + "'" + element.deviceid + "'"
+      await PgClient.query(
+        "delete from ti_device where deviceid = " + "'" + element.deviceId + "'"
       );
-      await client.query(
-        "delete from users where extn = " + "'" + element.devicecode + "'"
+      await PgClient.query(
+        "delete from users where extn = " + "'" + element.deviceCode + "'"
       );
-      await client.query(
+      await PgClient.query(
         "delete from ti_featurebase where deviceid = " +
           "'" +
-          element.deviceid +
+          element.deviceId +
           "'"
       );
-      data.push(element.devicecode);
+      data.push(element.deviceCode);
     }
     this.ctx.body = data;
-    client.end();
   }
   async detail() {
     const client = new Client({
