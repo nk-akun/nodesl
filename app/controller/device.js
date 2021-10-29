@@ -259,9 +259,7 @@ class DeviceController extends Controller {
     });
     client.connect();
     let requests = this.ctx.request.body;
-    let data = {};
-    data.code = 1;
-    data.result = [];
+    let data = [];
     for (let element of requests) {
       await client.query(
         "delete from ti_device where deviceid = " + "'" + element.deviceid + "'"
@@ -275,7 +273,7 @@ class DeviceController extends Controller {
           element.deviceid +
           "'"
       );
-      data.result.push(element.devicecode);
+      data.push(element.devicecode);
     }
     this.ctx.body = data;
     client.end();
