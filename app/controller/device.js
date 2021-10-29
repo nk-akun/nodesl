@@ -1,6 +1,6 @@
 const Controller = require("egg").Controller;
 const PgClient = require("./config");
-const { GetRandomId, GetMaxSortIndex } = require("./utils");
+const { Date, GetRandomId, GetMaxSortIndex } = require("./utils");
 
 class DeviceController extends Controller {
   async create() {
@@ -19,7 +19,7 @@ class DeviceController extends Controller {
     let sortIndex = parseInt(maxIndex.rows[0].max_index) + 1;
 
     let deviceData = await PgClient.query(
-      "insert into ti_device (deviceid,devicecode,devicename,password,type,state,status,sortindex) values(" +
+      "insert into ti_device (deviceid,devicecode,devicename,type,state,status,sortindex) values(" +
         "'" +
         deviceid +
         "'" +
@@ -30,10 +30,6 @@ class DeviceController extends Controller {
         "," +
         "'" +
         devicename +
-        "'" +
-        "," +
-        "'" +
-        password +
         "'" +
         "," +
         "'" +
@@ -54,8 +50,84 @@ class DeviceController extends Controller {
         ")"
     );
 
+    let context = "default";
+    let domain = "scc.ieyeplus.com";
+    let auto_record = 0;
+    let disabled = 0;
+    let weblogin_disabled = 0;
+    let created_at = new Date().Format("yyyy-MM-dd HH:mm:ss");
+    let updated_at = new Date().Format("yyyy-MM-dd HH:mm:ss");
+
+    let userData = await PgClient.query(
+      "insert into users (extn,name,context,domain,password,auto_record,disabled,weblogin_disabled,created_at,updated_at) values(" +
+        "'" +
+        devicecode +
+        "'" +
+        "," +
+        "'" +
+        devicename +
+        "'" +
+        "," +
+        "'" +
+        context +
+        "'" +
+        "," +
+        "'" +
+        domain +
+        "'" +
+        "," +
+        "'" +
+        password +
+        "'" +
+        "," +
+        "'" +
+        auto_record +
+        "'" +
+        "," +
+        "'" +
+        disabled +
+        "'" +
+        "," +
+        "'" +
+        weblogin_disabled +
+        "'" +
+        "," +
+        "'" +
+        created_at +
+        "'" +
+        "," +
+        "'" +
+        updated_at +
+        "'" +
+        ")"
+    );
+
+    let organizationid = this.ctx.request.body.feature.organizationid;
+    let aliasname = this.ctx.request.body.feature.aliasname;
+    let featureData = await PgClient.query(
+      "insert into ti_featurebase (deviceid,aliasname,organizationid) values(" +
+        "'" +
+        deviceid +
+        "'" +
+        "," +
+        "'" +
+        aliasname +
+        "'" +
+        "," +
+        "'" +
+        organizationid +
+        "'" +
+        ")"
+    );
+
+    // console.log(deviceData.rowCount, userData.rowCount, featureData.rowCount);
+
     // 返回值已简化
-    if (deviceData.rowCount > 0) {
+    if (
+      deviceData.rowCount > 0 &&
+      userData.rowCount > 0 &&
+      featureData.rowCount > 0
+    ) {
       this.ctx.body = deviceData.rowCount;
     } else {
       this.ctx.message = "修改失败!";
