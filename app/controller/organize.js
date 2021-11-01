@@ -79,7 +79,7 @@ class OrganizeController extends Controller {
     let childList = [];
     for (var i = 0; i < childResult.rows.length; i++) {
       let child = await this.queryOrgById(childResult.rows[i].organizationid);
-      childList.push(child);
+      childList.push(child[0]);
     }
 
     // 查询详细信息
@@ -92,8 +92,6 @@ class OrganizeController extends Controller {
     let result = orgResult.rows;
     result[0].childnum = childNum;
     result[0].Children = childList;
-
-    console.log(result);
     return result;
   }
 }
