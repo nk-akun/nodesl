@@ -7,27 +7,10 @@ class OrganizeController extends Controller {
   async queryData() {
     let organizationid = this.ctx.params.organizationid;
 
-    // 查询子org
-    let numResult = await PgClient.query(
-      "select count(*) from ti_organization where parentid = " +
-        "'" +
-        organizationid +
-        "'"
-    );
-    let childNum = numResult.rows[0].count;
-
-    // 查询详细信息
-    let dataResult = await PgClient.query(
-      "select organizationid,orgname,orgcode from ti_organization where organizationid = " +
-        "'" +
-        organizationid +
-        "'"
-    );
+    let result = await this.queryOrgById(organizationid);
 
     // 信息补充
-    let data = dataResult.rows;
-    data[0].childnum = childNum;
-    this.ctx.body = data;
+    this.ctx.body = result;
   }
 
   async queryDetail() {
@@ -81,6 +64,37 @@ class OrganizeController extends Controller {
 
     data = orgIds.length;
     this.ctx.body = data;
+  }
+
+  async queryOrgById(organizationid) {
+    // 查询子org
+    let childResult = await PgClient.query(
+      "select organizationid from ti_organization where parentid = " +
+        "'" +
+        organizationid +
+        "'"
+    );
+
+    let childNum = childResult.rowCount;
+    let childList = [];
+    for (var i = 0; i < childResult.rows.length; i++) {
+      let child = await this.queryOrgById(childResult.rows[i].organizationid);
+      childList.push(child);
+    }
+
+    // 查询详细信息
+    let orgResult = await PgClient.query(
+      "select organizationid,orgname,orgcode from ti_organization where organizationid = " +
+        "'" +
+        organizationid +
+        "'"
+    );
+    let result = orgResult.rows;
+    result[0].childnum = childNum;
+    result[0].Children = childList;
+
+    console.log(result);
+    return result;
   }
 }
 
