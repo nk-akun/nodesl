@@ -29,6 +29,11 @@ class FeatureController extends Controller {
         featureResult.rows[idx].organizationid;
     }
 
+    if (devices.length == 0) {
+      this.ctx.body = [];
+      return;
+    }
+
     let devs = devices.join(",");
     let devResult = await PgClient.query(
       "select * from ti_device where deviceid in " + "(" + devs + ")"
