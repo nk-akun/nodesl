@@ -114,7 +114,7 @@ class UserController extends Controller {
   async create() {
     let orgId = this.ctx.request.body.OrganizationID;
     let username = this.ctx.request.body.username;
-    // userRoles在数据表中没有体现
+    let roleId = this.ctx.request.body.userRoles[0].roleID;
     let password = this.ctx.request.body.password;
     let userid = GetRandomId();
 
@@ -144,6 +144,18 @@ class UserController extends Controller {
         "," +
         "'" +
         sortIndex +
+        "'" +
+        ")"
+    );
+
+    await PgClient.query(
+      "insert into tr_user_role (userid,roleid) values(" +
+        "'" +
+        userid +
+        "'" +
+        "," +
+        "'" +
+        roleId +
         "'" +
         ")"
     );
