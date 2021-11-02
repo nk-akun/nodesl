@@ -164,7 +164,7 @@ class UserController extends Controller {
   }
 
   async edit() {
-    let orgId = this.ctx.request.body.OrganizationID;
+    let orgId = this.ctx.request.body.organizationid;
     let username = this.ctx.request.body.username;
     // userRoles在数据表中没有体现
     let password = this.ctx.request.body.password;
