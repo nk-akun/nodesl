@@ -181,7 +181,7 @@ class OrganizeController extends Controller {
       );
     }
 
-    data = orgIds.length;
+    let data = orgIds.length;
     this.ctx.body = data;
   }
 
