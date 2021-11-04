@@ -53,7 +53,7 @@ module.exports = (app) => {
   router.post("/IpBc/Role/Create", controller.role.create);
   router.delete("/IpBc/Role/Remove/:roleid", controller.role.remove);
   router.delete(
-    "/IpBc/Organization/Remove/:organizationid", // TODO: test
+    "/IpBc/Organization/Remove/:organizationid",
     controller.organize.remove
   );
   router.get(

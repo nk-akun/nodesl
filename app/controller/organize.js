@@ -172,11 +172,11 @@ class OrganizeController extends Controller {
 
     // console.log(orgIds);
 
-    for (var orgId in childIds) {
+    for (var idx in orgIds) {
       await PgClient.query(
         "delete from ti_organization where organizationid = " +
           "'" +
-          orgId +
+          orgIds[idx] +
           "'"
       );
     }
