@@ -35,7 +35,7 @@ class OrganizeController extends Controller {
 
     if (existData.rowCount > 0) {
       this.ctx.body = 0;
-      this.ctx.message = "添加失败,已存在";
+      this.ctx.message = "fail";
       return;
     }
 
