@@ -50,6 +50,7 @@ module.exports = (app) => {
   router.delete("/IpBc/User/Remove/:userid", controller.user.remove);
   router.get("/IpBc/Role/List", controller.role.list);
   router.post("/IpBc/Role/List", controller.role.list);
+  router.post("/IpBc/Role/Create", controller.role.create);
   router.delete("/IpBc/Role/Remove/:roleid", controller.role.remove);
   router.delete(
     "/IpBc/Organization/Remove/:organizationid", // TODO: test
@@ -63,6 +64,7 @@ module.exports = (app) => {
     "/IpBc/Organization/Data/:organizationid",
     controller.organize.queryData
   );
+  router.get("/IpBc/Organization/Create", controller.organize.create);
   router.post("/IpBc/FolderMedia/Create", controller.folder.folderMediaCreate);
   router.post("/IpBc/Folder/Create", controller.folder.folderCreate);
   router.post("/IpBc/Folder/Edit", controller.folder.folderEdit);
