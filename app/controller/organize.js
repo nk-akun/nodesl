@@ -27,13 +27,13 @@ class OrganizeController extends Controller {
 
     // 校验是否已经存在，替前端填坑
     let existData = await PgClient.query(
-      "select count(*) from ti_organization where orgcode = " +
+      "select count(*) from ti_organization where meetingid = " +
         "'" +
-        orgcode +
+        meetingid +
         "'"
     );
 
-    if (existData.rowCount > 0) {
+    if (existData.rows[0].count > 0) {
       this.ctx.body = 0;
       this.ctx.message = "fail";
       return;
