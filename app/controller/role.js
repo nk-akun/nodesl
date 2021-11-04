@@ -47,7 +47,6 @@ class RoleController extends Controller {
     let data = await PgClient.query(
       "select roleid,rolename,childdata,sortindex from ti_role"
     );
-    // console.log(data);
     this.ctx.body = data.rows;
   }
 
@@ -56,10 +55,8 @@ class RoleController extends Controller {
     let data = await PgClient.query(
       "delete from ti_role where roleid = " + "'" + roleId + "'"
     );
-    // console.log(data);
     if (data.rowCount > 0) {
       this.ctx.body = data.rowCount;
-      this.ctx.message = "操作成功";
     } else {
       this.ctx.body = 0;
       this.ctx.message = "删除失败";
