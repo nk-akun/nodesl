@@ -25,6 +25,20 @@ class OrganizeController extends Controller {
     );
     let sortIndex = parseInt(maxIndex.rows[0].max_index) + 1;
 
+    // 校验是否已经存在，替前端填坑
+    let existData = await PgClient.query(
+      "select count(*) from ti_organization where orgcode = " +
+        "'" +
+        orgcode +
+        "'"
+    );
+
+    if (existData.rowCount > 0) {
+      this.ctx.body = 0;
+      this.ctx.message = "添加失败,已存在";
+      return;
+    }
+
     let data = await PgClient.query(
       "insert into ti_organization (organizationid,orgname,orgcode,parentid,vertoid,voicecallid,meetingid,broadid,alarmid,fullname,enable_left_watcher,enable_right_watcher,enable_out_watcher,sortindex) values(" +
         "'" +
