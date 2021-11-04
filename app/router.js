@@ -65,6 +65,7 @@ module.exports = (app) => {
     controller.organize.queryData
   );
   router.get("/IpBc/Organization/Create", controller.organize.create);
+  router.post("/IpBc/Organization/List", controller.organize.list);
   router.post("/IpBc/FolderMedia/Create", controller.folder.folderMediaCreate);
   router.post("/IpBc/Folder/Create", controller.folder.folderCreate);
   router.post("/IpBc/Folder/Edit", controller.folder.folderEdit);

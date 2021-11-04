@@ -6,8 +6,8 @@ const { GetRandomId } = require("./utils");
 
 class RoleController extends Controller {
   async create() {
-    let rolename = this.ctx.body.rolename;
-    let childdata = this.ctx.body.childdata;
+    let rolename = this.ctx.request.body.rolename;
+    let childdata = this.ctx.request.body.childdata;
     let roleid = GetRandomId();
     let maxIndex = await PgClient.query(
       "select max(sortindex) as max_index from ti_role"
