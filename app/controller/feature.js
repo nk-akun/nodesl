@@ -7,12 +7,38 @@ const { Date, GetRandomId } = require("./utils");
 class FeatureController extends Controller {
   async getFeatureByOrg() {
     let flag = this.ctx.query.flag;
+    let organizationid = this.ctx.params.organizationid;
+    let ans = await this.getDeviceListByOrg(organizationid, flag);
+    console.log(ans);
+    this.ctx.body = ans;
+    return;
+  }
+
+  async getDeviceListByOrg(orgId, flag) {
+    let ans = [];
+
+    // true时需要查询子结构的device列表
     if (flag == "true") {
-      this.ctx.body = null;
-      return;
+      let orgList = [];
+      let orgResult = await PgClient.query(
+        "select organizationid from ti_organization where parentid = " +
+          "'" +
+          orgId +
+          "'"
+      );
+      orgList = orgResult.rows;
+      for (var idx in orgList) {
+        let childDeviceList = await this.getDeviceListByOrg(
+          orgList[idx].organizationid,
+          flag
+        );
+        ans = ans.concat(childDeviceList);
+        // console.log(213123123, orgList[idx].organizationid, childDeviceList);
+      }
     }
 
-    let organizationid = this.ctx.params.organizationid;
+    // 查询父结构的device列表
+    let organizationid = orgId;
     let featureResult = await PgClient.query(
       "select * from ti_featurebase where organizationid = " +
         "'" +
@@ -44,7 +70,9 @@ class FeatureController extends Controller {
       data[idx].organizationid = deMap[data[idx].deviceid];
     }
 
-    this.ctx.body = data;
+    ans = ans.concat(data);
+
+    return ans;
   }
 }
 
