@@ -9,7 +9,7 @@ class FeatureController extends Controller {
     let flag = this.ctx.query.flag;
     let organizationid = this.ctx.params.organizationid;
     let ans = await this.getDeviceListByOrg(organizationid, flag);
-    console.log(ans);
+
     this.ctx.body = ans;
     return;
   }
@@ -71,6 +71,12 @@ class FeatureController extends Controller {
     }
 
     ans = ans.concat(data);
+    for (var idx = 0; idx < ans.length; idx++) {
+      if (ans[idx] == null) {
+        ans.splice(idx, 1);
+        idx--;
+      }
+    }
 
     return ans;
   }
