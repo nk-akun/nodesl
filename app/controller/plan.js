@@ -51,8 +51,7 @@ class PlanController extends Controller {
 
     // 时区问题
     let date = new Date(planPreTime);
-    date.setHours(date.getHours() + 8);
-    planPreTime = date.format("yyyy-MM-dd HH:mm:ss");
+    planPreTime = date.Format("yyyy-MM-dd HH:mm:ss");
 
     let data = await PgClient.query(
       "insert into tl_plan (planid,planname,planpretime,planpremodel,plantime,planmodel,createtime,createuserid,path,time,meeting,cmdtype,period) values(" +
